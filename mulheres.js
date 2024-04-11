@@ -97,6 +97,6 @@ function mostraPorta() {
  
 app.use(router.get('/mulheres', mostraMulheres)) //configurado rota GET /mulheres
 app.use(router.post('/mulheres', criaMulher)) //configurado rota POST /mulheres
-app.use(router.patch('/mulheres/:id'))
+app.use(router.patch('/mulheres/:id', corrigeMulher)) //configurado a rota PATCH/mulheres/:id
 
 app.listen(porta, mostraPorta)  //Servidor ouvindo a porta
