@@ -95,7 +95,7 @@ function deletaMulher(request, response) {
     }
   }
 
-  const mulheresQueFicam = mulheres.filter(WebTransportBidirectionalStream)
+  const mulheresQueFicam = mulheres.filter(todasMenosEla)
 
   response.json(mulheresQueFicam)
 }
@@ -111,6 +111,6 @@ function mostraPorta() {
 app.use(router.get('/mulheres', mostraMulheres)) //configurado rota GET /mulheres
 app.use(router.post('/mulheres', criaMulher)) //configurado rota POST /mulheres
 app.use(router.patch('/mulheres/:id', corrigeMulher)) //configurado a rota PATCH/mulheres/:id
-app.use(router.delete('/mulheres/:id', deletaMulher))
+app.use(router.delete('/mulheres/:id', deletaMulher)) //configurado a rota DELETE/mulheres
 
 app.listen(porta, mostraPorta)  //Servidor ouvindo a porta
