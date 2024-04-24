@@ -1,6 +1,9 @@
 const express = require("express")   //aqui estou iniciando o express
 const router = express.Router()  //aqui estou configurando a primeira parte da rota
-const { v4: uuidv4 } = require('uuid') //solicitando a biblioteca NPM uuid
+const {v4: uuidv4} = require('uuid') //solicitando a biblioteca NPM uuid
+
+const conectaBancoDeDados = require('./bancoDeDados')
+conectaBancoDeDados()
 
 const app = express()    //aqui estou iniciando o app
 app.use(express.json()) //tratando as requisições
