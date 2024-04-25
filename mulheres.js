@@ -1,6 +1,6 @@
 const express = require("express")   //aqui estou iniciando o express
 const router = express.Router()  //aqui estou configurando a primeira parte da rota
-const {v4: uuidv4} = require('uuid') //solicitando a biblioteca NPM uuid
+
 
 const conectaBancoDeDados = require('./bancoDeDados')
 conectaBancoDeDados()
@@ -14,51 +14,58 @@ const porta = 3333    //criando a porta 3333
 function mostraMulheres(request, response) {
     try {
         const mulheresVindasDoBancoDeDados = await Mulher.find()
-
         response.json(mulheresVindasDoBancoDeDados)
+
     }catch(erro){
         console.log(erro)
     }
 }
 
 //POST 
-function criaMulher(request, response) {
-    const novaMulher = {
-      id: uuidv4(),
+async function criaMulher(request, response) {
+    const novaMulher = new Mulher({
       nome: request.body.nome,
       imagem: request.body.imagem,
-      minibio: request.body.minibio
-    }
-
-    mulheres.push(novaMulher)
-
-    response.json(mulheres)
+      minibio: request.body.minibio,
+      citacao: request.body.citacao
+    })
     
+    try {
+      const mulherCriada = await novaMulher.save()
+      response.status(201).json(mulherCriada)
+    } catch(erro) {
+      console.log(erro)
+    }
 }
 
 //PATCH 
-function corrigeMulher(request, response) {
-    function encontraMulher(mulher) {
-      if (mulher.id === request.params.id) {
-        return mulher
-      }
-    }
+async function corrigeMulher(request, response) {
+    try {
+        const mulherEncontrada = await Mulher.findById(request.params.id)
 
-    const mulherEncontrada = mulheres.find(encontraMulher)
-
-    if (request.body.nome) {
-      mulherEncontrada.nome = request.body.nome
-    }
-
-    if (request.body.minibio) {
-      mulherEncontrada.minibio = request.body.minibio
-    }
-
-    if (request.body.imagem) {
-      mulherEncontrada.imagem = request.body.imagem
-    }
+        if (request.body.nome) {
+          mulherEncontrada.nome = request.body.nome
+        }
     
-    response.json(mulheres)
+        if (request.body.minibio) {
+          mulherEncontrada.minibio = request.body.minibio
+        }
+    
+        if (request.body.imagem) {
+          mulherEncontrada.imagem = request.body.imagem
+        }
+
+        if(request.body.citacao) {
+          mulherEncontrada = request.body.citacao
+        }  
+
+        const mulherAtualizadaNoBancoDeDados = await mulherEncontrada.save()    
+
+        response.json(mulherAtualizadaNoBancoDeDados)
+
+    } catch(erro) {
+        console.log(erro)
+    } 
 }
 
 //DELETE
