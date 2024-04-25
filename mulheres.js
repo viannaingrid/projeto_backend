@@ -5,49 +5,20 @@ const {v4: uuidv4} = require('uuid') //solicitando a biblioteca NPM uuid
 const conectaBancoDeDados = require('./bancoDeDados')
 conectaBancoDeDados()
 
+const Mulher = require('./mulherModel')
 const app = express()    //aqui estou iniciando o app
 app.use(express.json()) //tratando as requisições
 const porta = 3333    //criando a porta 3333
 
-//Criado a lista inicial de mulheres 
-const mulheres = [
-    {
-        id: '1',
-
-        nome: 'Simara Conceição',
-     
-        imagem: 'https://bit.ly/3LJIyOF',
-     
-        minibio: 'Desenvolvedora e instrutora',
-     
-      },
-     
-      {
-        id: '2',
-
-        nome: 'Iana Chan',
-     
-        imagem: 'https://bit.ly/3JCXBqP',
-     
-        minibio: 'CEO & Founder da PrograMaria',
-     
-      },
-     
-      {
-        id: '3',
-     
-        nome: 'Luana Pimentel',
-     
-        imagem: 'https://bit.ly/3FKpFaz',
-     
-        minibio: 'Senior Staff Software Engineer',
-     
-      }
-]
-
 //GET
 function mostraMulheres(request, response) {
-    response.json(mulheres)
+    try {
+        const mulheresVindasDoBancoDeDados = await Mulher.find()
+
+        response.json(mulheresVindasDoBancoDeDados)
+    }catch(erro){
+        console.log(erro)
+    }
 }
 
 //POST 
