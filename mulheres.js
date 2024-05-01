@@ -11,7 +11,7 @@ app.use(express.json()) //tratando as requisições
 const porta = 3333    //criando a porta 3333
 
 //GET
-function mostraMulheres(request, response) {
+async function mostraMulheres(request, response) {
     try {
         const mulheresVindasDoBancoDeDados = await Mulher.find()
         response.json(mulheresVindasDoBancoDeDados)

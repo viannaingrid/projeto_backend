@@ -8,7 +8,7 @@ async function conectaBancoDeDados() {
 
         console.log('Conexão com o banco de dados iniciou') //iniciou o banco
 
-        await mongoose.connect('mongodb+srv://viannaingrid856:3gYLWYCSYmERGJ6I@cluster0.ayzcm9w.mongodb.net/') //await(esperar) e fez a conexão com mongoDB
+        await mongoose.connect() //await(esperar) e fez a conexão com mongoDB
 
         console.log('Conexão com o banco de dados feita com sucesso!') //mensagem que a conexão foi um sucesso
 
